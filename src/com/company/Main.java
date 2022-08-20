@@ -28,7 +28,7 @@ public class Main {
     //Первая версия qr, побайтовое кодирование
     public static void addServiceInformation (String str) {
         String inf;
-        inf = String.join(String.format("%8s", Integer.toBinaryString(str.length())).replace(' ', '0'),"0100", "");
+        inf = String.join("", "0100", String.format("%8s", Integer.toBinaryString(str.length())).replace(' ', '0'));
         System.out.println(inf);
     }
 
