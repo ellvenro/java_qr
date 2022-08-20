@@ -22,6 +22,8 @@ public class Main {
         for (byte aByte : bytes) {
             bin = String.join("", bin, String.format("%8s", Integer.toBinaryString(aByte)).replace(' ', '0'));
         }
+
+        //Дополнение строки нулями для кратности восьми
         bin = String.join("", bin, "0000");
         System.out.println(bin);
     }
