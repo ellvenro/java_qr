@@ -1,4 +1,5 @@
 package com.company;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
@@ -12,15 +13,14 @@ public class Main {
         coding(str);
     }
 
+    //Кодировка исходной строки в UTF-8
     public static void coding (String str) {
-        int lenMas = (int)Math.ceil((float)str.length() / 3);
-        int lenStr = str.length();
-        char[][] code = new char[lenMas][3];
+        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+        String[] bin = new String[bytes.length];
 
-        for (int i = 0, j = 0; i < lenStr; i+=3, j++) {
-            str.getChars(i, Math.min(i + 3, lenStr), code[j], 0);
+        for (int i = 0; i < bytes.length; i++) {
+            bin[i] = String.format("%8s", Integer.toBinaryString(bytes[i])).replace(' ', '0');
+            System.out.println(bin[i]);
         }
-        for (int i = 0; i < lenMas; i++)
-            System.out.println(code[i]);
     }
 }
