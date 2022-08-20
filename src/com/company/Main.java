@@ -17,12 +17,12 @@ public class Main {
     //Кодировка исходной строки в UTF-8
     public static void coding (String str) {
         byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
-        String[] bin = new String[bytes.length];
+        String bin = "";
 
-        for (int i = 0; i < bytes.length; i++) {
-            bin[i] = String.format("%8s", Integer.toBinaryString(bytes[i])).replace(' ', '0');
-            System.out.println(bin[i]);
+        for (byte aByte : bytes) {
+            bin = String.join("", bin, String.format("%8s", Integer.toBinaryString(aByte)).replace(' ', '0'));
         }
+        System.out.println(bin);
     }
 
     //Первая версия qr, побайтовое кодирование
