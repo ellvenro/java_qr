@@ -11,6 +11,7 @@ public class Main {
         System.out.printf("Output: %s\n", str);
         in.close();
         coding(str);
+        addServiceInformation(str);
     }
 
     //Кодировка исходной строки в UTF-8
@@ -22,5 +23,22 @@ public class Main {
             bin[i] = String.format("%8s", Integer.toBinaryString(bytes[i])).replace(' ', '0');
             System.out.println(bin[i]);
         }
+    }
+
+    //Первая версия qr, побайтовое кодирование
+    public static void addServiceInformation (String str) {
+        String inf;
+        inf = String.join(String.format("%8s", Integer.toBinaryString(str.length())).replace(' ', '0'),"0100", "");
+        System.out.println(inf);
+    }
+
+    //Определение максимального количества информации и уровня коррекции
+    public static int determLevel (String str) {
+        int len = str.length();
+        if (len <= 72) return 72;        // H
+        else if (len <= 104) return 104; // Q
+        else if (len <= 128) return 128; // M
+        else if (len <= 152) return 152; // L
+        else return -1;                  //Не подходит по условиям, ошибка ???
     }
 }
