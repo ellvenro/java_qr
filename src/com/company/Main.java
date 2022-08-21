@@ -5,18 +5,15 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        /*
+
         Scanner in = new Scanner(System.in);
         System.out.print("Input: ");
         String str = in.nextLine();
         System.out.printf("Output: %s\n", str);
         in.close();
         coding(str);
-        */
-        int[] splitBufInt = {64, 196, 132, 84, 196, 196, 242, 194, 4, 132, 20, 37, 34, 16, 236, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        int cntCor = 28;
-        int[] corMas = {168, 223, 200, 104, 224, 234, 108, 180, 110, 190, 195, 147, 205, 27, 232, 201, 21, 43, 245, 87, 42, 195, 212, 119, 242, 37, 9, 123};
-        Algorithm.algorithm(splitBufInt, cntCor, corMas, 16);
+
+
     }
 
     //Создание кода
@@ -37,6 +34,9 @@ public class Main {
 
         //Добавление байтов коррекции
         bin = String.join("", bin, correct(bin));
+
+        //Расположение кода в матрице
+        matrixLocation(bin);
     }
 
     //Первая версия qr, побайтовое кодирование
@@ -71,7 +71,7 @@ public class Main {
     }
 
     //Создание байтов коррекции
-    public static String correct(String bin){
+    public static String correct (String bin){
         //Колличество байтов коррекции
         int cntCor;
         int[] corMas = null;
@@ -118,5 +118,60 @@ public class Main {
         return binCor;
     }
 
+    //Расположение закодированной строки в матрице qr-кода
+    public static void matrixLocation (String bin) {
+        int n = 21;
+        byte[][] matrix = new byte[n][n];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++) {
+                //Добавление поисковых узоров
+                if (i <= 7 && j <= 7) {
+                    if ((i == 0 || i == 6 ) && j != 7 ||
+                            (j == 0 || j == 6 ) && i != 7 ||
+                            (i >= 2 && i <= 4 && j >= 2 && j <= 4))
+                        matrix[i][j] = 1;
+                    else
+                        matrix[i][j] = 0;
+                }
+                else
+                    matrix[i][j] = -1;
+            }
+
+        //Добавление поисковых узоров
+        for (int i = 0; i <= 7; i++) {
+            System.arraycopy(matrix[i], 0, matrix[n - i - 1], 0, 8);
+            for (int j = 0; j <= 7; j++)
+                matrix[i][n-j-1] = matrix[i][j];
+        }
+
+        //Добавление полос синхронизации
+        for (int j = 8; j < n-8; j+=2) {
+            matrix[6][j] = matrix[j][6] = 1;
+            matrix[6][j+1] = matrix[j+1][6] = 0;
+        }
+
+        String mask = switch (Algorithm.corLev) {
+            case 'H':
+                yield "001011010001001";
+            case 'Q':
+                yield "011010101011111";
+            case 'M':
+                yield "101010000010010";
+            case 'L':
+                yield "111011111000100";
+            default:
+                yield "";
+        };
+
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print((matrix[i][j] != -1) ? matrix[i][j] : " ");
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+
+    }
 
 }

@@ -58,7 +58,6 @@ public class Algorithm {
                 else
                     splitBufInt[j] = splitBufInt[j + 1];
             }
-            System.out.println();
             if (A == 0)
                 continue;
             int C = 0;
