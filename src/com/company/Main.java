@@ -35,7 +35,7 @@ public class Main {
         //Добавление чередующихся байтов
         bin = Filling(str, bin);
 
-        System.out.println(bin);
+        //Добавление байтов коррекции
         correct(bin);
     }
 
@@ -73,30 +73,24 @@ public class Main {
     //Создание байтов коррекции
     public static void correct(String bin){
         //Колличество байтов коррекции
-        int cntCor = 0;
+        int cntCor;
         int[] corMas = null;
-        switch (Algorithm.corLev)
+        cntCor = switch (Algorithm.corLev)
         {
             case 'H':
-                cntCor = Algorithm.genMasH.length;
-                corMas = new int[cntCor];
-                for (int i = 0; i < cntCor; i++)
-                    corMas[i] = Algorithm.genMasH[i];
+                corMas = Algorithm.genMasH.clone();
+                yield Algorithm.genMasH.length;
             case 'Q':
-                cntCor = Algorithm.genMasQ.length;
-                corMas = new int[cntCor];
-                for (int i = 0; i < cntCor; i++)
-                    corMas[i] = Algorithm.genMasQ[i];
+                corMas = Algorithm.genMasQ.clone();
+                yield Algorithm.genMasQ.length;
             case 'M':
-                cntCor = Algorithm.genMasM.length;
-                corMas = new int[cntCor];
-                for (int i = 0; i < cntCor; i++)
-                    corMas[i] = Algorithm.genMasM[i];
+                corMas = Algorithm.genMasM.clone();
+                yield Algorithm.genMasM.length;
             case 'L':
-                cntCor = Algorithm.genMasL.length;
-                corMas = new int[cntCor];
-                for (int i = 0; i < cntCor; i++)
-                    corMas[i] = Algorithm.genMasL[i];
+                corMas = Algorithm.genMasL.clone();
+                yield Algorithm.genMasL.length;
+            default:
+                yield -1;
         };
 
         //Создание десятичного массива из бинарной строки
@@ -113,6 +107,7 @@ public class Main {
             splitBufInt[i] = 0;
 
         Algorithm.algorithm(splitBufInt, cntCor, corMas, cnt);
+        //Преобразование в строку бит
 
     }
 
