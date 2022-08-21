@@ -35,6 +35,8 @@ public class Main {
         //Добавление байтов коррекции
         bin = String.join("", bin, correct(bin));
 
+        System.out.println(bin);
+
         //Расположение кода в матрице
         matrixLocation(bin);
     }
@@ -112,8 +114,8 @@ public class Main {
         //Преобразование в строку бит
         String binCor = "";
         for (int elem : splitDecCor) {
-            binCor = String.join("", bin, String.format("%8s", Integer.toBinaryString(elem)).replace(' ', '0'));
-        }
+            binCor = String.join("", binCor, String.format("%8s", Integer.toBinaryString(elem)).replace(' ', '0'));
+          }
 
         return binCor;
     }
@@ -152,6 +154,7 @@ public class Main {
 
         matrix[n-8][8] = 1;
 
+        //Определение кода для маски
         String mask = switch (Algorithm.corLev) {
             case 'H':
                 yield "001011010001001";
@@ -186,9 +189,57 @@ public class Main {
             j4--;
         }
 
+        System.out.println(bin);
+        //Добавление данных
+        int i = n-1, j= n-1;
+        int ibin = 0;
+        while(i > 0 && j > 0 && ibin < bin.length()) {
+            while (i >= 0) {
+                if (matrix[i][j] != -1) {
+                    i--;
+                    continue;
+                }
+                matrix[i][j] = (bin.charAt(ibin) == '1') ? (byte) 1 : 0;
+                j--;
+                ibin++;
+                matrix[i][j] = (bin.charAt(ibin) == '1') ? (byte) 1 : 0;
+                j++;
+                i--;
+                ibin++;
+            }
+            i++;
+            j -= 2;
+            if (j == 6)
+                j--;
+            while (i < n) {
+                if(matrix[i][j] != -1)
+                {
+                    i++;
+                    continue;
+                }
+                matrix[i][j] = (bin.charAt(ibin) == '1') ? (byte) 1 : 0;
+                j--;
+                ibin++;
+                matrix[i][j] = (bin.charAt(ibin) == '1') ? (byte) 1 : 0;
+                j++;
+                i++;
+                ibin++;
+            }
+            i--;
+            j -= 2;
+        }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        //Наложение маски
+        for (i = 0; i < n; i++)
+            for(j = 0; j < n; j++)
+            {
+                if ((i > 8 || j > 8) && (i > 8 || j < n-8) && (i < n-8 || j > 8) && i != 6 && j != 6)
+                    matrix[i][j] = (byte) (matrix[i][j] ^ (((i+j)%2 == 1) ? (byte)1 : 0));
+            }
+
+        System.out.println();
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
                 System.out.print((matrix[i][j] != -1) ? matrix[i][j] : " ");
                 System.out.print(" ");
             }
