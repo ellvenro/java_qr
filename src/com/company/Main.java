@@ -36,7 +36,7 @@ public class Main {
         bin = Filling(str, bin);
 
         //Добавление байтов коррекции
-        correct(bin);
+        bin = String.join("", bin, correct(bin));
     }
 
     //Первая версия qr, побайтовое кодирование
@@ -71,7 +71,7 @@ public class Main {
     }
 
     //Создание байтов коррекции
-    public static void correct(String bin){
+    public static String correct(String bin){
         //Колличество байтов коррекции
         int cntCor;
         int[] corMas = null;
@@ -106,9 +106,16 @@ public class Main {
         for (int i = cnt; i < cntCor; i++)
             splitBufInt[i] = 0;
 
-        Algorithm.algorithm(splitBufInt, cntCor, corMas, cnt);
-        //Преобразование в строку бит
+        //Применение алгоритма рида-Соломона
+        int[] splitDecCor = Algorithm.algorithm(splitBufInt, cntCor, corMas, cnt);
 
+        //Преобразование в строку бит
+        String binCor = "";
+        for (int elem : splitDecCor) {
+            binCor = String.join("", bin, String.format("%8s", Integer.toBinaryString(elem)).replace(' ', '0'));
+        }
+
+        return binCor;
     }
 
 

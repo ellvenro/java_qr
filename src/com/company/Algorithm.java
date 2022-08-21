@@ -48,16 +48,15 @@ public class Algorithm {
     };
 
     //Применение алгоритма Рида-Соломона
-    public static void algorithm(int[] splitBufInt, int cntCor, int[] corMas, int cnt){
+    public static int[] algorithm(int[] splitBufInt, int cntCor, int[] corMas, int cnt){
 
         for (int i = 0; i < cnt; i++) {
             int A = splitBufInt[0];
-            for (int j = 0; j < splitBufInt.length; j++) {
+            for (int j = 0; j < cntCor; j++) {
                 if (j == splitBufInt.length - 1)
                     splitBufInt[j] = 0;
                 else
                     splitBufInt[j] = splitBufInt[j + 1];
-                System.out.printf("%d ", splitBufInt[j]);
             }
             System.out.println();
             if (A == 0)
@@ -69,10 +68,8 @@ public class Algorithm {
                 if (C > 254)
                     C = C % 255;
                 splitBufInt[j] = field[C] ^ splitBufInt[j];
-                System.out.printf("%d ", splitBufInt[j]);
             }
-            System.out.println();
-            System.out.println();
         }
+        return splitBufInt;
     }
 }
