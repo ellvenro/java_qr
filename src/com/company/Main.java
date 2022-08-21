@@ -150,6 +150,8 @@ public class Main {
             matrix[6][j+1] = matrix[j+1][6] = 0;
         }
 
+        matrix[n-8][8] = 1;
+
         String mask = switch (Algorithm.corLev) {
             case 'H':
                 yield "001011010001001";
@@ -162,6 +164,27 @@ public class Main {
             default:
                 yield "";
         };
+
+        //Запись маски и уровная коррекции
+        int j1 = 0, j2 = 8, j3 = 0, j4 = 14;
+        for (int i = 0; i <= 8; i++)
+        {
+            if (i != 6 ) {
+                matrix[8][i] = (mask.charAt(j1) == '1') ? (byte) 1 : 0;
+                j1++;
+            }
+            if (i != 7 && j3 <= 6) {
+                matrix[n-i-1][8] = (mask.charAt(j3) == '1') ? (byte) 1 : 0;
+                j3++;
+            }
+            if (8-i-1 != 6 && j2 < 15) {
+                matrix[8 - i - 1][8] = (mask.charAt(j2) == '1') ? (byte) 1 : 0;
+                j2++;
+            }
+            if (j4 > 6)
+            matrix[8][n-i-1] = (mask.charAt(j4) == '1') ? (byte) 1 : 0;
+            j4--;
+        }
 
 
         for (int i = 0; i < n; i++) {
