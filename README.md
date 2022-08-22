@@ -12,5 +12,5 @@
 На полученный код накладывается маска с номером 0.
 
 <p align="center">
-    <img src="https://drive.google.com/uc?export=view&id=1V1hlmWXrGlwN9kI4Xj5NxbmFD7eYR3GE"/>
+    <img src="https://drive.google.com/uc?export=view&id=1V1hlmWXrGlwN9kI4Xj5NxbmFD7eYR3GE" width="500"/>
 </p>
