@@ -5,11 +5,9 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
         Scanner in = new Scanner(System.in);
         System.out.print("Input: ");
         String str = in.nextLine();
-        System.out.printf("Output: %s\n", str);
         in.close();
         coding(str);
     }
