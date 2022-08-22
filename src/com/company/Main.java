@@ -12,8 +12,6 @@ public class Main {
         System.out.printf("Output: %s\n", str);
         in.close();
         coding(str);
-
-
     }
 
     //Создание кода
@@ -34,8 +32,6 @@ public class Main {
 
         //Добавление байтов коррекции
         bin = String.join("", bin, correct(bin));
-
-        System.out.println(bin);
 
         //Расположение кода в матрице
         matrixLocation(bin);
@@ -189,7 +185,6 @@ public class Main {
             j4--;
         }
 
-        System.out.println(bin);
         //Добавление данных
         int i = n-1, j= n-1;
         int ibin = 0;
@@ -240,12 +235,10 @@ public class Main {
         System.out.println();
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
-                System.out.print((matrix[i][j] != -1) ? matrix[i][j] : " ");
+                System.out.print((matrix[i][j] != 0) ? matrix[i][j] : " ");
                 System.out.print(" ");
             }
             System.out.println();
         }
-
     }
-
 }
