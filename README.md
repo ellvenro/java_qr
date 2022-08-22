@@ -14,3 +14,31 @@
 <p align="center">
     <img src="https://drive.google.com/uc?export=view&id=1V1hlmWXrGlwN9kI4Xj5NxbmFD7eYR3GE" width="500"/>
 </p>
+
+## Основные моменты при реализации
+
+Был создан классс _Algorithm_, содержащий корректирующие многочлены для разных уровней коррекции и реализацию алгоритма Рида-соломона.
+
+С помощью инструментов _java_ было реалзовано побайтовое кодирование информации с помощью кодировки UTF-8.
+
+```java
+//Кодировка исходной строки в UTF-8
+        byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+        String bin = "";
+
+        for (byte aByte : bytes) {
+            bin = String.join("", bin, String.format("%8s", Integer.toBinaryString(aByte)).replace(' ', '0'));
+        }
+```
+
+Вывод информации реализован простым способом с помощью замены символа 1 на символ "■", 0 на " ".
+
+```java
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                System.out.print((matrix[i][j] != 0) ? "■" : " ");
+                System.out.print("  ");
+            }
+            System.out.println();
+        }
+```
